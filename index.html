@@ -38,17 +38,19 @@
 
     <form id="updateForm">
         <label for="gameTitle">Title *</label>
-        <input type="text" value="" name="gameTitle" id="gameTitle" />
+        <input type="text" value="" name="gameTitle" id="updateGameTitle" />
 
         <label for="gameDescription">Description</label>
-        <textarea name="gameDescription" id="gameDescription"></textarea>
+        <textarea name="gameDescription" id="updateGameDescription"></textarea>
   
         <label for="gameImageUrl">Image URL *</label>
-        <input type="text" name="gameImageUrl" id="gameImageUrl" />
+        <input type="text" name="gameImageUrl" id="updateGameImageUrl" />
 
         <button class="updateBtn">Save Changes</button>
         <button class="cancelBtn">Cancel</button>
     </form>
+
+    <div class="uppContainer"></div>
     
     <script src="model.js"></script>
     <script src="view.js"></script>

@@ -1,29 +1,67 @@
-
+// Afiseaza lista de jocuri
 getGamesList(function(arrayOfGames){
     for(var i = 0; i < arrayOfGames.length; i++) {
         createDomElement(arrayOfGames[i]);
     }
 });
 
+//Afiseaza in DOM jocul nou creat
 function createDomElement(gameObj){
     var container1 = document.querySelector('.container');
     const gameELement = document.createElement("div");
+    gameELement.setAttribute("id", gameObj._id);
     gameELement.innerHTML = `<h1>${gameObj.title}</h1> 
                         <img src="${gameObj.imageUrl}" />
-                        <p>${gameObj.description}</p> 
-                        <button class="delete-btn" id="${gameObj._id}">Delete Game</button>
-                        <button class="update-btn" id="${gameObj._id}">Edit Game</button>`;    
-
+                        <p>${gameObj.description}</p>
+                        <button class="delete-btn" id="${gameObj._id}">Delete</button>
+                        <button class="update-btn" id="${gameObj._id}">Edit Game</button>`;  
+       
     container1.appendChild(gameELement);
 
-    document.getElementById(`${gameObj._id}`).addEventListener("click", function(event){
+    //console.log(gameELement);
+
+    // Se creaza functionalitate pe butoanele de Delete respectiv Edit(Update);
+    
+   document.getElementById(`${gameObj._id}`).addEventListener("click", function(event){
+    if (event.target.classList.contains('delete-btn')){
+
         deleteGame(event.target.getAttribute("id"), function(apiResponse){
+             // apiResponse = message = "Game gameID deleted!" -> only json file from server removed, gameDiv remains;
             console.log(apiResponse);
+
+            // event.target = deleteButton
+            // event.target.parentElement = deleteButton.parentElement
+            // deleteButton.parentElement = gameElement;
+            // => remove gameElement from DOM
             removeDeletedElementFromDOM(event.target.parentElement);
         })
-    });
-}
+    } else if(event.target.classList.contains('update-btn')){
 
+        gameELement.appendChild(updateFormGameElement);
+           
+        
+    }
+
+    
+    });
+ //Formul pentru update-ul jocului pus intr-un div pentru a fi atasat div-ului 'gameElement' prin butonul Edit Game;
+    const updateFormGameElement = document.createElement("div");
+    
+    updateFormGameElement.innerHTML = `<form class="updateForm">
+                                        <label for="gameTitle">Title *</label>
+                                        <input type="text" value="" name="gameTitle" id="gameTitle"/>
+                                        <label for="gameDescription">Description</label>
+                                        <textarea name="gameDescription" id="gameDescription"></textarea>
+                                        <label for="gameImageUrl">Image URL *</label>
+                                        <input type="text" name="gameImageUrl" id="gameImageUrl"/>
+                                        <button class="updateBtn">Save Changes</button>
+                                        <button class="cancelBtn">Cancel</button>
+                                    </form>`;
+
+
+   
+}
+ //functia pentru stergerea elementului din DOM;
 function removeDeletedElementFromDOM(domElement){
     domElement.remove();
 }
@@ -57,10 +95,12 @@ function buildErrorMessage(inputEl, errosMsg){
     inputEl.after(errorMsgElement);
 }
 
+//Adaugam functionalitate pe butonul de submit;
 
 document.querySelector(".submitBtn").addEventListener("click", function(event){
     event.preventDefault();
 
+    //colectam datele din Form (create form);
     const gameTitle = document.getElementById("gameTitle");
     const gameDescription = document.getElementById("gameDescription");
     const gameGenre = document.getElementById("gameGenre");
@@ -68,6 +108,7 @@ document.querySelector(".submitBtn").addEventListener("click", function(event){
     const gameImageUrl = document.getElementById("gameImageUrl");
     const gameRelease = document.getElementById("gameRelease");
 
+    //Validam elemenntele care sunt obligatorii(required *);
     validateFormElement(gameTitle, "The title is required!");
     validateFormElement(gameGenre, "The genre is required!");
     validateFormElement(gameImageUrl, "The image URL is required!");
@@ -76,7 +117,8 @@ document.querySelector(".submitBtn").addEventListener("click", function(event){
     validateReleaseTimestampElement(gameRelease, "The release date you provided is not a valid timestamp!");
 
     if(gameTitle.value !== "" && gameGenre.value !== "" && gameImageUrl.value !== "" && gameRelease.value !== "") {
-        var urlencoded = new URLSearchParams();
+        // Daca totul este valid, encodam parametrii pentru  a fi trimisi in request catre Api
+        const urlencoded = new URLSearchParams();
         urlencoded.append("title", gameTitle.value);
         urlencoded.append("releaseDate", gameRelease.value);
         urlencoded.append("genre", gameGenre.value);
@@ -84,6 +126,19 @@ document.querySelector(".submitBtn").addEventListener("click", function(event){
         urlencoded.append("imageUrl", gameImageUrl.value);
         urlencoded.append("description", gameDescription.value);
 
+        // facem requestul si folosim raspunsul la afisarea jocului
         createGameRequest(urlencoded, createDomElement);
     }
+    //resetam form-ul , golind inputurile, dupa succes submit
+    clearInputs();
 })
+
+function clearInputs() {
+    document.querySelector(".creationForm").reset()
+}
+
+
+
+
+
+
