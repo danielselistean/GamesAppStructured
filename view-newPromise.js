@@ -1,14 +1,12 @@
 // Afiseaza lista de jocuri
 
-async function getGames(){
-    getGamesList().then(function(gamesList){
-
-        for(var i = 0; i < gamesList.length; i++) {
-            createDomElement(gamesList[i]);
+    getGamesList().then(function(arrayOfGames){
+      console.log(arrayOfGames);
+        for(let i = 0; i < arrayOfGames.length; i++) {
+            createDomElement(arrayOfGames[i]);
         };
     });
-}
-getGames();
+
 
   //Afiseaza in DOM jocul nou creat
   function createDomElement(gameObj){
@@ -68,7 +66,7 @@ getGames();
    document.getElementById(`${gameObj._id}`).addEventListener("click", function(event){
     if (event.target.classList.contains('delete-btn')){
   
-          deleteGame(event.target.getAttribute("id").then(removeDeletedElementFromDOM(event.target.parentElement)));
+          deleteGame(event.target.getAttribute("id")).then(removeDeletedElementFromDOM(event.target.parentElement));
     } else if(event.target.classList.contains('update-btn')){
   
         gameELement.appendChild(updateGameElement);
@@ -143,6 +141,7 @@ getGames();
     if(gameTitle.value !== "" && gameGenre.value !== "" && gameImageUrl.value !== "" && gameRelease.value !== "") {
         // Daca totul este valid, encodam parametrii pentru  a fi trimisi in request catre Api
         const urlencoded = new URLSearchParams();
+
         urlencoded.append("title", gameTitle.value);
         urlencoded.append("releaseDate", gameRelease.value);
         urlencoded.append("genre", gameGenre.value);
@@ -154,7 +153,7 @@ getGames();
         // createGameRequest(urlencoded, createDomElement);
         createGameRequest(urlencoded).then(createDomElement);
     }
-    //resetam form-ul , golind inputurile, dupa succes submit
+    // Resetam form-ul , golind inputurile, dupa "succes form submit" ;
     clearInputs();
   })
   

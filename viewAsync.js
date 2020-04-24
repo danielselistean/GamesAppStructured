@@ -1,18 +1,18 @@
 // Afiseaza lista de jocuri
 
 async function getGames(){
-    const gamesList = await getGamesList();
-    console.log(gamesList);
+    const arrayOfGames = await getGamesList();
+    console.log(arrayOfGames);
 
-    for(var i = 0; i < gamesList.length; i++) {
-        createDomElement(gamesList[i]);
+    for(let i = 0; i < arrayOfGames.length; i++) {
+        createDomElement(arrayOfGames[i]);
     };
 }
 getGames();
 
   //Afiseaza in DOM jocul nou creat
   function createDomElement(gameObj){
-    var container1 = document.querySelector('.container');
+    var container = document.querySelector('.container');
     const gameELement = document.createElement("div");
     gameELement.setAttribute("id", gameObj._id);
     gameELement.innerHTML = `<h1>${gameObj.title}</h1> 
@@ -55,7 +55,7 @@ getGames();
     }                                        
                         
 
-    container1.appendChild(gameELement);
+    container.appendChild(gameELement);
 
  
     //Formul pentru update-ul jocului pus intr-un div pentru a fi atasat div-ului 'gameElement' prin butonul Edit Game;
@@ -150,8 +150,10 @@ getGames();
     validateReleaseTimestampElement(gameRelease, "The release date you provided is not a valid timestamp!");
   
     if(gameTitle.value !== "" && gameGenre.value !== "" && gameImageUrl.value !== "" && gameRelease.value !== "") {
+      
         // Daca totul este valid, encodam parametrii pentru  a fi trimisi in request catre Api
         const urlencoded = new URLSearchParams();
+
         urlencoded.append("title", gameTitle.value);
         urlencoded.append("releaseDate", gameRelease.value);
         urlencoded.append("genre", gameGenre.value);
@@ -161,8 +163,11 @@ getGames();
   
         // facem requestul si folosim raspunsul la afisarea jocului
         // createGameRequest(urlencoded, createDomElement);
-        const game = await createGameRequest(urlencoded);
+        async function createGame(){
+          const game = await createGameRequest(urlencoded);
         createDomElement(game);
+        }
+        createGame();
     }
     //resetam form-ul , golind inputurile, dupa succes submit
     clearInputs();

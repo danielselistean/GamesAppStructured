@@ -1,4 +1,5 @@
-var apiURL = "https://games-world.herokuapp.com";
+//var apiURL = "https://games-world.herokuapp.com";
+var apiURL = "https://games-app-siit.herokuapp.com";
 
   async function getGamesList(){
     const response = await  fetch(apiURL + "/games", {
@@ -7,20 +8,25 @@ var apiURL = "https://games-world.herokuapp.com";
                     "Content-Type": "application/x-www-form-urlencoded"
                 }
             });
+            console.log(response);
     const arrayOfGames = await response.json();
-    return arrayOfGames;
+        return arrayOfGames;
 
 }
 
 
 async function deleteGame(gameID){
   const response = await  fetch(apiURL + "/games/" + gameID, {
-               method: "DELETE"});
+               method: "DELETE",
+               headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        });
+        console.log(response);
+
   const apiresponse = await response.text();
-
   console.log(apiresponse);
-
-  return apiresponse;
+    return apiresponse;
 }
 
 
@@ -35,14 +41,12 @@ async function createGameRequest(gameObject){
           });
 
   const createdGame = await response.json();
-
   console.log(createdGame);
-
-  return createdGame;
+    return createdGame;
 }
 
 
-async function updateGameRequest(gameID, updatedGame){
+async function updateGameRequest(gameID, updatedGameObject){
     const response = await fetch(apiURL + "/games/" + gameID, {
         method: "PUT",
         headers: {
@@ -53,6 +57,5 @@ async function updateGameRequest(gameID, updatedGame){
 
     const updatedGame = await response.json();
     console.log(updatedGame);
-
-    return updatedGame;
+        return updatedGame;
 }

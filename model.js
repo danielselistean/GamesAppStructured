@@ -1,4 +1,5 @@
-var apiURL = "https://games-world.herokuapp.com";
+//var apiURL = "https://games-world.herokuapp.com";
+var apiURL = "https://games-app-siit.herokuapp.com";
 
 function getGamesList(callbackFunction){
     fetch(apiURL + "/games", {
@@ -7,8 +8,10 @@ function getGamesList(callbackFunction){
             "Content-Type": "application/x-www-form-urlencoded"
         }
     }).then(function(response){
+        console.log(response);
         return response.json();
     }).then(function(arrayOfGames){
+        console.log(arrayOfGames);
         callbackFunction(arrayOfGames);
     });
 }

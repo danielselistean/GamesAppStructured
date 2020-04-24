@@ -1,18 +1,34 @@
-var apiURL = "https://games-world.herokuapp.com";
+//var apiURL = "https://games-world.herokuapp.com";
+var apiURL = "https://games-app-siit.herokuapp.com";
 
 function getGamesList() {
-    return fetch('https://games-world.herokuapp.com/games')
-        .then((response) => {
-            return response.json();
-        })
+    return fetch(apiURL + "/games",{
+        method: "GET",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        }
+    }).then(function(response){
+        console.log(response);
+        return response.json();
+    })
+    // .catch(function(error){
+    //     console.log('An error has occured:', error);
+    // });
+   
 }
 
 function deleteGame(gameID) {
-    return fetch(apiURL + "/games/" + gameID, {
-        method: "DELETE"
-    }).then((response) => {
+    return fetch(apiURL + "/games/"+ gameID,{
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        }
+    }).then(function(response){
         return response.text();
     })
+    // .catch(function(error){
+    //     console.log('An error has occured:', error);
+    // });
 
 }
 
@@ -23,9 +39,12 @@ function createGameRequest(gameObject) {
             "Content-Type": "application/x-www-form-urlencoded",
         },
         body: gameObject
-    }).then((response) => {
+    }).then(function(response){
         return response.json();
-    });
+    })
+    // .catch(function(error){
+    //     console.log('An error has occured:', error);
+    // });
 }
 
 function updateGameRequest(gameId, updateGameObj) {
@@ -35,7 +54,10 @@ function updateGameRequest(gameId, updateGameObj) {
             "Content-Type": "application/x-www-form-urlencoded",
         },
         body: updateGameObj
-    }).then((response) => {
-        return response.json()
+    }).then(function(response){
+        return response.json();
     })
+    // .catch(function(error){
+    //     console.log('An error has occured:', error);
+    // });
 }
