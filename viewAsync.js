@@ -49,7 +49,11 @@ getGames();
         urlencoded.append("imageUrl", updateGameImageUrl);
         urlencoded.append("description", updateGameDescription);
     
-        updateGameRequest(urlencoded, newDomElement);
+        async function updateGame(){
+          const gameUpdated = await updateGameRequest(urlencoded);
+        createDomElement(gameUpdated);
+        }
+        updateGame();
 
         document.querySelector(".updateForm").reset()
     }                                        

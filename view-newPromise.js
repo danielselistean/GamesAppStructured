@@ -47,7 +47,7 @@
         urlencoded.append("imageUrl", updateGameImageUrl);
         urlencoded.append("description", updateGameDescription);
     
-        updateGameRequest(urlencoded, newDomElement);
+        updateGameRequest(urlencoded).then(newDomElement);
 
         document.querySelector(".updateForm").reset()
     }                                        
