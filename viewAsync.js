@@ -69,19 +69,20 @@ getGames();
   
     // Se creaza functionalitate pe butoanele de Delete respectiv Edit(Update);
     
-   document.getElementById(`${gameObj._id}`).addEventListener("click", async function(event){
+   document.getElementById(`${gameObj._id}`).addEventListener("click", function(event){
     if (event.target.classList.contains('delete-btn')){
-  
-         await deleteGame(event.target.getAttribute("id"), function(apiResponse){
+        (async function(){
+          const apiResponse = await deleteGame(event.target.getAttribute("id")) ;
+      
              // apiResponse = message = "Game gameID deleted!" -> only json file from server removed, gameDiv remains;
-            console.log(apiResponse);
+            //console.log(apiResponse);
   
             // event.target = deleteButton
             // event.target.parentElement = deleteButton.parentElement
             // deleteButton.parentElement = gameElement;
             // => remove gameElement from DOM
             removeDeletedElementFromDOM(event.target.parentElement);
-        })
+        })();
     } else if(event.target.classList.contains('update-btn')){
   
         gameELement.appendChild(updateGameElement);
