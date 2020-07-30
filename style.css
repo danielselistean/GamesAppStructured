@@ -48,8 +48,9 @@
 }
 
 img {
-    width: 90px;
-    float:left;
+    width: 140px;
+    max-height: 180px;
+    float: left;
     margin: 10px;
 }
 
