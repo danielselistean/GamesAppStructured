@@ -13,7 +13,7 @@ h2 {
 }
 .delete-btn {
     width: 100px;
-    height: 20px;
+    height: 24px;
     background-color: red;
     border: none;
     color: white;
@@ -22,7 +22,7 @@ h2 {
 
 .update-btn {
     width: 100px;
-    height: 20px;
+    height: 24px;
     background-color: blue;
     border: none;
     color: white;
@@ -30,17 +30,18 @@ h2 {
 
 
 .submitBtn {
-    width: 100px;
-    height: 20px;
+    width: 200px;
+    height: 30px;
     background-color: green;
     border: none;
     color: white;
+    margin: 20px auto;
 }
 
 
 .cancelBtn {
     width: 100px;
-    height: 20px;
+    height: 24px;
     background-color: orangered;
     border: none;
     color: white;
@@ -48,7 +49,7 @@ h2 {
 
 .updateBtn {
     width: 100px;
-    height: 20px;
+    height: 24px;
     background-color: cornflowerblue;
     border: none;
     color: white;
