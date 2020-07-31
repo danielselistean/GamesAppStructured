@@ -3,7 +3,14 @@
     padding: 0;
     box-sizing: border-box;
 }
-
+body {
+    background-color: #f2ccff;
+}
+h2 {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 30px;
+}
 .delete-btn {
     width: 100px;
     height: 20px;
@@ -68,6 +75,8 @@ button {
 .creationForm {
     display: flex;
     flex-direction: column;
+    width: 40%;
+    margin: 1rem auto;
 }
 
 .creationForm>label,
@@ -77,6 +86,11 @@ button {
  {
     display: block;
     margin: 5px 10px;
+    padding: 0.3rem;
+}
+.container {
+    width: 50%;
+    margin: 0 auto;
 }
 
 .inputError {
